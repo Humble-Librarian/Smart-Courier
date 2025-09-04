@@ -1,6 +1,6 @@
 # Smart Courier Package Allocation System
 
-Demo project for ADA subject: package allocation + routing.
+V0 of project for ADA subject: package allocation + routing.
 
 Run demo:
 ```bash
