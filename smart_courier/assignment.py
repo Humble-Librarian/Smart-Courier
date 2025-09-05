@@ -1,21 +1,20 @@
-from typing import List, Dict
-from .models import Package, Van
-from .knapsack import knapsack_dp
 
-def assign_packages_greedy(packages: List[Package], vans: List[Van]) -> Dict[str,List[Package]]:
-    packs_sorted=sorted(packages,key=lambda p:p.value/p.weight if p.weight>0 else 0,reverse=True)
-    state={v.vid:{'cap':v.capacity,'items':[]} for v in vans}
-    for p in packs_sorted:
-        candidate=None; best_left=None
-        for v in vans:
-            if state[v.vid]['cap']>=p.weight:
-                left=state[v.vid]['cap']-p.weight
-                if candidate is None or left<best_left:
-                    candidate=v.vid; best_left=left
-        if candidate:
-            state[candidate]['items'].append(p)
-            state[candidate]['cap']-=p.weight
-    return {vid:info['items'] for vid,info in state.items()}
+from .knapsack import knapsack_01
 
-def assign_packages_knapsack(packages: List[Package], van: Van):
-    return knapsack_dp(packages, van.capacity)
+def assign_packages_knapsack(vans, packages):
+    assignments={}; remaining=packages[:]
+    for van in vans:
+        _,chosen=knapsack_01(remaining,van.capacity)
+        assignments[van.id]=chosen
+        for p in chosen: remaining.remove(p)
+    return assignments
+
+def assign_packages_greedy(vans, packages):
+    assignments={}; remaining=sorted(packages,key=lambda p:p.value/p.weight,reverse=True)
+    for van in vans:
+        cap=van.capacity; load=[]
+        for p in remaining[:]:
+            if p.weight<=cap:
+                load.append(p); cap-=p.weight; remaining.remove(p)
+        assignments[van.id]=load
+    return assignments

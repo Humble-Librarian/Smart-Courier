@@ -1,8 +1,3 @@
-# Smart Courier Package Allocation System
+# Smart Courier V1
 
-Demo project for ADA subject: package allocation + routing.
-
-Run demo:
-```bash
-python -m smart_courier.main
-```
+Simple courier allocation system with 10 vans, 100 packages, and a small road network.

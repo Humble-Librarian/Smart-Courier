@@ -1,7 +1,0 @@
-source,destination,distance
-A,B,10
-A,C,15
-B,C,12
-B,D,20
-C,D,8
-A,D,30
