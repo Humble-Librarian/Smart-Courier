@@ -1,7 +1,7 @@
 from smart_courier.assignment import assign_packages_greedy
 from smart_courier.models import Package, Van
-def test_greedy_assignment():
-    pkgs=[Package(1,5,10),Package(2,4,40),Package(3,6,30)]
-    vans=[Van(1,10)]
-    result=assign_packages_greedy(vans,pkgs)
-    assert 1 in result
+def test_greedy():
+    pkgs=[Package("p1",5,10,1,"B"),Package("p2",4,40,1,"C"),Package("p3",6,30,1,"D")]
+    vans=[Van("Van1",10)]
+    res = assign_packages_greedy(vans, pkgs)
+    assert "Van1" in res

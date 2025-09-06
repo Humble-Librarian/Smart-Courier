@@ -1,15 +1,23 @@
-
-import csv
-from .models import Package, Van
+import pandas as pd
+from smart_courier.models import Package, Van
 
 def load_packages_csv(path):
-    with open(path, newline='') as f:
-        return [Package(int(r['id']), int(r['weight']), int(r['value']), int(r['priority'])) for r in csv.DictReader(f)]
+    df = pd.read_csv(path)
+    return [
+        Package(
+            row['id'],
+            row['weight'],
+            row['value'],
+            row['priority'],
+            row['destination']   # NEW
+        )
+        for _, row in df.iterrows()
+    ]
 
 def load_vans_csv(path):
-    with open(path, newline='') as f:
-        return [Van(int(r['id']), int(r['capacity'])) for r in csv.DictReader(f)]
+    df = pd.read_csv(path)
+    return [Van(row['id'], row['capacity']) for _, row in df.iterrows()]
 
 def load_edge_list_csv(path):
-    with open(path, newline='') as f:
-        return [(r['u'], r['v'], int(r['w'])) for r in csv.DictReader(f)]
+    df = pd.read_csv(path)
+    return [(row['source'], row['target'], row['weight']) for _, row in df.iterrows()]
