@@ -1,1 +1,1 @@
-# graph placeholder
+# This file is a placeholder for future graph-related functionality
